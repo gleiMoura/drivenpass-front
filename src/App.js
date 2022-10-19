@@ -1,4 +1,3 @@
-
 import AuthComponent from "./components/authComponent";
 
 function App() {
