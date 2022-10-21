@@ -1,9 +1,9 @@
-import AuthComponent from "./components/authComponent";
+import SignIn from "./pages/signin"
 
 function App() {
   return (
    <>
-	 	<AuthComponent />
+		<SignIn />
 	 </>
   );
 }

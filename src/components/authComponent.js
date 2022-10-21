@@ -1,20 +1,23 @@
 import { useState } from "react";
 import styled from "styled-components";
 import padlock from "../assets/padlock.png";
+import API from "../repository/API";
 
-export default function authComponent() {
-	const [loading, setLoading] = useState(false);
+export default function authComponent({buttonName, authType}) {
 
 	function submitForm(e) {
 		e.preventDefault();
-		setLoading(true);
 
 		const body = {
-			email: e.target[1].value,
-			password: e.target[3].value
+			email: e.target[0].value,
+			password: e.target[1].value
 		}
 
-		console.log(body);
+		const promise = API.authentication(body, authType);
+		promise.then(response => {
+      localStorage.setItem("data", JSON.stringify(response.data));
+		})
+		promise.catch() //colocar mensagem de erro em um estado e mudar com catch
 	}
 
 	return (
@@ -28,7 +31,7 @@ export default function authComponent() {
 				<input type="email" id="email" />
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
-				<input type="submit" value="acessar" id="submit"/>
+				<input type="submit" value={buttonName} id="submit"/>
 			</Form>
 		</>
 	)
