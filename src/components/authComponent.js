@@ -2,9 +2,17 @@ import { useState } from "react";
 import styled from "styled-components";
 import padlock from "../assets/padlock.png";
 import API from "../repository/API";
+import { Link } from "react-router-dom";
 
-export default function AuthComponent({buttonName, authType}) {
+export default function AuthComponent({
+	buttonName,
+	authType, 
+	failMessage, 
+	routerMessage,
+	routerLink
+}) {
 	const [loading, setLoading] = useState(false);
+	const [message, setMessage] = useState(true);
 
 	function submitForm(e) {
 		e.preventDefault();
@@ -22,6 +30,7 @@ export default function AuthComponent({buttonName, authType}) {
 		promise.catch(err => {
 			console.error(err);
 			setLoading(false);
+			setMessage(false);
 		})
 	}
 
@@ -37,7 +46,8 @@ export default function AuthComponent({buttonName, authType}) {
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
 				<input type="submit" value={buttonName} id="submit"/>
-				<p>{loading ? "carregando..." : "E-mail ou senha inválidos!!!"}</p>
+				<p>{loading ? "carregando..." : ""}{message ? "" : failMessage}</p>
+				<Link to = {routerLink}>{routerMessage}</Link>
 			</Form>
 		</>
 	)
@@ -99,5 +109,17 @@ const Form = styled.form`
 
 		border-radius: 5px;
 		cursor: pointer;
+		font-family: 'Recursive';
+		font-size: 18px;
+		font-weight: 400;
+		color: black;
+	}
+
+	a{
+		font-family: 'Recursive';
+		font-size: 18px;
+		color: black;
+		padding-top: 20px;
+		border-top: 1px solid #DBDBDB;
 	}
 `
