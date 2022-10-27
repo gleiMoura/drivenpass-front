@@ -3,10 +3,12 @@ import styled from "styled-components";
 import padlock from "../assets/padlock.png";
 import API from "../repository/API";
 
-export default function authComponent({buttonName, authType}) {
+export default function AuthComponent({buttonName, authType}) {
+	const [loading, setLoading] = useState(false);
 
 	function submitForm(e) {
 		e.preventDefault();
+		setLoading(true);
 
 		const body = {
 			email: e.target[0].value,
@@ -17,7 +19,10 @@ export default function authComponent({buttonName, authType}) {
 		promise.then(response => {
       localStorage.setItem("data", JSON.stringify(response.data));
 		})
-		promise.catch() //colocar mensagem de erro em um estado e mudar com catch
+		promise.catch(err => {
+			console.error(err);
+			setLoading(false);
+		})
 	}
 
 	return (
@@ -32,6 +37,7 @@ export default function authComponent({buttonName, authType}) {
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
 				<input type="submit" value={buttonName} id="submit"/>
+				<p>{loading ? "carregando..." : "E-mail ou senha inválidos!!!"}</p>
 			</Form>
 		</>
 	)
