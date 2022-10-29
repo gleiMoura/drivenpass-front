@@ -8,7 +8,8 @@ export default function AuthComponent({
 	buttonName,
 	authType,
 	routerMessage,
-	routerLink
+	routerLink,
+	promiseLink
 }) {
 	const [message, setMessage] = useState("");
 	const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function AuthComponent({
 		const promise = API.authentication(body, authType);
 		promise.then(response => {
 			localStorage.setItem("data", JSON.stringify(response.data));
-			navigate("/")
+			navigate(promiseLink);
 		})
 		promise.catch((error) => {
 			const errorData = error.response.data;
