@@ -2,21 +2,19 @@ import { useState } from "react";
 import styled from "styled-components";
 import padlock from "../assets/padlock.png";
 import API from "../repository/API";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AuthComponent({
 	buttonName,
-	authType, 
-	failMessage, 
+	authType,
 	routerMessage,
 	routerLink
 }) {
-	const [loading, setLoading] = useState(false);
-	const [message, setMessage] = useState(true);
+	const [message, setMessage] = useState("");
+	const navigate = useNavigate();
 
 	function submitForm(e) {
 		e.preventDefault();
-		setLoading(true);
 
 		const body = {
 			email: e.target[0].value,
@@ -25,12 +23,28 @@ export default function AuthComponent({
 
 		const promise = API.authentication(body, authType);
 		promise.then(response => {
-      localStorage.setItem("data", JSON.stringify(response.data));
+			localStorage.setItem("data", JSON.stringify(response.data));
+			navigate("/")
 		})
-		promise.catch(err => {
-			console.error(err);
-			setLoading(false);
-			setMessage(false);
+		promise.catch((error) => {
+			const errorData = error.response.data;
+			const errorStatus = error.response.status;
+			const errorHeaders = error.response.headers;
+			if (error.response) {
+				console.log(
+					"Data -->", errorData, 
+					"---- Status -->", errorStatus, 
+					"---- Headers -->", errorHeaders
+				)
+			}
+
+			if (body.password.length < 10) {
+				setMessage("senha deve conter no mínimo 10 caracteres!")
+			} else if(errorStatus === 409){
+				setMessage("E-mail já registrado. Escolha outro!")
+			}else{
+				setMessage("Insira um E-mail e senha válidos")
+			}
 		})
 	}
 
@@ -45,9 +59,9 @@ export default function AuthComponent({
 				<input type="email" id="email" />
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
-				<input type="submit" value={buttonName} id="submit"/>
-				<p>{loading ? "carregando..." : ""}{message ? "" : failMessage}</p>
-				<Link to = {routerLink}>{routerMessage}</Link>
+				<input type="submit" value={buttonName} id="submit" />
+				<p>{message}</p>
+				<Link to={routerLink}>{routerMessage}</Link>
 			</Form>
 		</>
 	)
