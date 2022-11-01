@@ -25,6 +25,7 @@ export default function AuthComponent({
 		const promise = API.authentication(body, authType);
 		promise.then(response => {
 			localStorage.setItem("data", JSON.stringify(response.data));
+			console.log(response.data)
 			navigate(promiseLink);
 		})
 		promise.catch((error) => {
@@ -61,7 +62,7 @@ export default function AuthComponent({
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
 				<input type="submit" value={buttonName} id="submit" />
-				<p>{message}</p>
+				<p className="Form__message">{message}</p>
 				<Link to={routerLink}>{routerMessage}</Link>
 			</Form>
 		</>
@@ -136,5 +137,10 @@ const Form = styled.form`
 		color: black;
 		padding-top: 20px;
 		border-top: 1px solid #DBDBDB;
+	}
+
+	.Form__message{
+		margin-top: 15px;
+		color: red;
 	}
 `
