@@ -31,7 +31,8 @@ const API = {
 	authentication,
 	getCredentials,
 	getNotes,
-	getCards
+	getCards,
+	getWifi
 };
 
 export default API;

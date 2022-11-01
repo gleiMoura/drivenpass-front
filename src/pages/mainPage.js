@@ -24,6 +24,7 @@ export default function MainPage() {
 		const credentialPromise = API.getCredentials(config);
 		const notePromise = API.getNotes(config);
 		const cardPromise = API.getCards(config);
+		const wifiPromise = API.getWifi(config);
 
 		credentialPromise.then(response => {
 			setCredentials(response.data);
@@ -35,6 +36,10 @@ export default function MainPage() {
 
 		cardPromise.then(response => {
 			setCards(response.data);
+		});
+
+		wifiPromise.then(response => {
+			setWifi(response.data);
 		})
 	}, [])
 
@@ -48,17 +53,17 @@ export default function MainPage() {
 		icon: <BiPencil className="Subsection__icon" />,
 		name: "Notas Seguras",
 		linkName: "safetyNotes",
-		count: 4
+		count: notes.length
 	}, {
 		icon: <BiCreditCard className="Subsection__icon" />,
 		name: "Cartões",
 		linkName: "cards",
-		count: 3
+		count: cards.length
 	}, {
 		icon: <BiWifi className="Subsection__icon" />,
 		name: "Senhas de Wifi",
 		linkName: "wifi",
-		count: 5
+		count: wifi.length
 	}];
 
 	function Subsections() {
