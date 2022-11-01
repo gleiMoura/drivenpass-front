@@ -22,6 +22,11 @@ function getCards(config) {
 	return promise;
 }
 
+function getWifi(config) {
+	const promise = axios.get(`${BASE_URL}/wifi`, config);
+	return promise;
+}
+
 const API = {
 	authentication,
 	getCredentials,
