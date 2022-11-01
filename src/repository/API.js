@@ -17,6 +17,11 @@ const promise = axios.get(`${BASE_URL}/notes`, config);
 return promise;
 }
 
+function getCards(config) {
+	const promise = axios.get(`${BASE_URL}/cards`, config);
+	return promise;
+}
+
 const API = {
 	authentication,
 	getCredentials,
