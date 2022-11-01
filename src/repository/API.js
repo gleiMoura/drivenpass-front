@@ -25,7 +25,8 @@ function getCards(config) {
 const API = {
 	authentication,
 	getCredentials,
-	getNotes
+	getNotes,
+	getCards
 };
 
 export default API;

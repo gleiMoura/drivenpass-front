@@ -23,6 +23,7 @@ export default function MainPage() {
 	useEffect(() => {
 		const credentialPromise = API.getCredentials(config);
 		const notePromise = API.getNotes(config);
+		const cardPromise = API.getCards(config);
 
 		credentialPromise.then(response => {
 			setCredentials(response.data);
@@ -31,6 +32,10 @@ export default function MainPage() {
 		notePromise.then(response => {
 			setNotes(response.data);
 		});
+
+		cardPromise.then(response => {
+			setCards(response.data);
+		})
 	}, [])
 
 
