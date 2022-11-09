@@ -1,26 +1,26 @@
 import HeaderComponent from "../components/headerComponent";
 import API from "../repository/API";
 import styled from "styled-components"
+import credentialContext from "../contextsAPI/credentialContext";
 import { Link } from "react-router-dom";
 import { BiLogIn, BiPencil, BiCreditCard, BiWifi } from "react-icons/bi";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 export default function MainPage() {
-	const [credentials, setCredentials] = useState(0);
+	const { credentials, setCredentials } = useContext(credentialContext);
 	const [notes, setNotes] = useState(0);
 	const [cards, setCards] = useState(0);
 	const [wifi, setWifi] = useState(0);
 
-	const { token } = JSON.parse(localStorage.getItem("data"));
-
-	const config = {
-		headers: {
-			authorization: `Bearer ${token}`
-		}
-	};
-
 	useEffect(() => {
+		const { token } = JSON.parse(localStorage.getItem("data"));
+
+		const config = {
+			headers: {
+				authorization: `Bearer ${token}`
+			}
+		};
+
 		const credentialPromise = API.getCredentials(config);
 		const notePromise = API.getNotes(config);
 		const cardPromise = API.getCards(config);
@@ -41,7 +41,7 @@ export default function MainPage() {
 		wifiPromise.then(response => {
 			setWifi(response.data);
 		})
-	}, [])
+	}, [setCredentials])
 
 
 	const subsectionList = [{

@@ -3,16 +3,16 @@ import SignUp from "./pages/signup";
 import MainPage from "./pages/mainPage";
 import Credentials from "./pages/credentialPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CountContext from "./contextsAPI/countContext";
+import CredentialContext from "./contextsAPI/credentialContext";
 import { useState } from "react";
 
 
 function App() {
-	const [count, setCount] = useState("nothing here");
+	const [credentials, setCredentials] = useState([]);
 
 	return (
 		<>
-			<CountContext.Provider value={{ count, setCount }}>
+			<CredentialContext.Provider value={{ credentials, setCredentials }}>
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<SignIn />}></Route>
@@ -21,7 +21,7 @@ function App() {
 						<Route path="/credentials" element={<Credentials />}></Route>
 					</Routes>
 				</BrowserRouter>
-			</CountContext.Provider>
+			</CredentialContext.Provider>
 		</>
 	);
 }
