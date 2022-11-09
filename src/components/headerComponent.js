@@ -1,15 +1,22 @@
 import styled from "styled-components";
 import { BsBoxArrowRight } from "react-icons/bs";
-import padlock from "../assets/padlock.png"
+import padlock from "../assets/padlock.png";
+import { useNavigate } from "react-router-dom";
 
 export default function HeaderComponent({ headerTitle }) {
+	const navigate = useNavigate();
+	
+	function logout() {
+		localStorage.clear();
+		navigate("/");
+	}
 	return (
 		<>
 			<MainHeader>
 				<Logo>
 					<img src={padlock} alt="padlock" />
 					<h1>DrivenPass</h1>
-					<BsBoxArrowRight id="logout" />
+					<BsBoxArrowRight id="logout" onClick={() => {logout()}}/>
 				</Logo>
 				<Title>
 					{headerTitle}

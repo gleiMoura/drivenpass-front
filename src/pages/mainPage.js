@@ -1,13 +1,12 @@
 import HeaderComponent from "../components/headerComponent";
 import API from "../repository/API";
 import styled from "styled-components"
-import credentialContext from "../contextsAPI/credentialContext";
 import { Link } from "react-router-dom";
 import { BiLogIn, BiPencil, BiCreditCard, BiWifi } from "react-icons/bi";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 export default function MainPage() {
-	const { credentials, setCredentials } = useContext(credentialContext);
+	const [credentials, setCredentials] = useState(0);
 	const [notes, setNotes] = useState(0);
 	const [cards, setCards] = useState(0);
 	const [wifi, setWifi] = useState(0);
@@ -41,7 +40,7 @@ export default function MainPage() {
 		wifiPromise.then(response => {
 			setWifi(response.data);
 		})
-	}, [setCredentials])
+	}, [])
 
 
 	const subsectionList = [{

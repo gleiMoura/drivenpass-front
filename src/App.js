@@ -8,11 +8,11 @@ import { useState } from "react";
 
 
 function App() {
-	const [credentials, setCredentials] = useState([]);
+	const [credentialsData, setCredentialsData] = useState([]);
 
 	return (
 		<>
-			<CredentialContext.Provider value={{ credentials, setCredentials }}>
+			<CredentialContext.Provider value={{ credentialsData, setCredentialsData }}>
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<SignIn />}></Route>
