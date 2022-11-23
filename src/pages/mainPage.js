@@ -3,10 +3,12 @@ import API from "../repository/API";
 import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { BiLogIn, BiPencil, BiCreditCard, BiWifi } from "react-icons/bi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import credentialContext from "../contextsAPI/credentialContext";
 
 export default function MainPage() {
-	const [credentials, setCredentials] = useState(0);
+	const { credentials } = useContext(credentialContext);
+
 	const [notes, setNotes] = useState(0);
 	const [cards, setCards] = useState(0);
 	const [wifi, setWifi] = useState(0);
@@ -20,14 +22,9 @@ export default function MainPage() {
 			}
 		};
 
-		const credentialPromise = API.getCredentials(config);
 		const notePromise = API.getNotes(config);
 		const cardPromise = API.getCards(config);
 		const wifiPromise = API.getWifi(config);
-
-		credentialPromise.then(response => {
-			setCredentials(response.data);
-		});
 
 		notePromise.then(response => {
 			setNotes(response.data);
@@ -85,15 +82,12 @@ export default function MainPage() {
 
 
 	return (
-		<>
 			<Page>
 				<HeaderComponent headerTitle={"Minhas Senhas"} />
 				<Main>
 					<Subsections />
 				</Main>
 			</Page>
-
-		</>
 	)
 }
 
