@@ -12,24 +12,30 @@ function getCredentials(config) {
 	return promise;
 };
 
+function getCredentialById(config, idCredential) {
+	const promise = axios.get(`${BASE_URL}/credentials/${idCredential}`, config);
+	return promise;
+};
+
 function getNotes(config) {
 const promise = axios.get(`${BASE_URL}/notes`, config);
 return promise;
-}
+};
 
 function getCards(config) {
 	const promise = axios.get(`${BASE_URL}/cards`, config);
 	return promise;
-}
+};
 
 function getWifi(config) {
 	const promise = axios.get(`${BASE_URL}/wifi`, config);
 	return promise;
-}
+};
 
 const API = {
 	authentication,
 	getCredentials,
+	getCredentialById,
 	getNotes,
 	getCards,
 	getWifi

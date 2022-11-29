@@ -4,8 +4,11 @@ import credentialContext from "../contextsAPI/credentialContext";
 import API from "../repository/API";
 import styled from "styled-components";
 import { BiLogIn } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 export default function Credentials() {
+	const navigate = useNavigate();
+
 	const { credentials, setCredentials } = useContext(credentialContext);
 
 	useEffect(() => {
@@ -38,7 +41,9 @@ export default function Credentials() {
 					<AllCredentials>
 						{credentials.map(element => {
 							return (
-								<Element>
+								<Element onClick={() => {
+									navigate(`/credential/${element.id}`)
+								}}>
 									<BiLogIn className="Element__icon" />
 									<Title>
 										{element.title}
@@ -72,6 +77,7 @@ const Element = styled.div`
 	display: flex;
 	justify-content: first baseline;
 	align-items: center;
+	cursor: pointer;
 
 	.Element__icon{
 		font-size: 50px;

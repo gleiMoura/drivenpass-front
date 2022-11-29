@@ -25,7 +25,6 @@ export default function AuthComponent({
 		const promise = API.authentication(body, authType);
 		promise.then(response => {
 			localStorage.setItem("data", JSON.stringify(response.data));
-			console.log(response.data)
 			navigate(promiseLink);
 		})
 		promise.catch((error) => {
