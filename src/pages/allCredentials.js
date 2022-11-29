@@ -9,23 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function Credentials() {
 	const navigate = useNavigate();
 
-	const { credentials, setCredentials } = useContext(credentialContext);
-
-	useEffect(() => {
-		const { token } = JSON.parse(localStorage.getItem("data"));
-
-		const config = {
-			headers: {
-				authorization: `Bearer ${token}`
-			}
-		};
-
-		const credentialPromise = API.getCredentials(config);
-
-		credentialPromise.then(response => {
-			setCredentials(response.data);
-		});
-	}, [setCredentials])
+	const { credentials } = useContext(credentialContext);
 
 	return (
 		<Page>

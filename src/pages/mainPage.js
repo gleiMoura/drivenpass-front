@@ -3,15 +3,17 @@ import API from "../repository/API";
 import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { BiLogIn, BiPencil, BiCreditCard, BiWifi } from "react-icons/bi";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import credentialContext from "../contextsAPI/credentialContext";
+import noteContext from "../contextsAPI/noteContext";
+import cardContext from "../contextsAPI/cardContext";
+import wifiContext from "../contextsAPI/wifiContext"
 
 export default function MainPage() {
-	const { credentials } = useContext(credentialContext);
-
-	const [notes, setNotes] = useState(0);
-	const [cards, setCards] = useState(0);
-	const [wifi, setWifi] = useState(0);
+	const { credentials, setCredentials } = useContext(credentialContext);
+	const { notes, setNotes } = useContext(noteContext);
+	const { cards, setCards } = useContext(cardContext);
+	const { wifi, setWifi } = useContext(wifiContext);
 
 	useEffect(() => {
 		const { token } = JSON.parse(localStorage.getItem("data"));
@@ -21,10 +23,14 @@ export default function MainPage() {
 				authorization: `Bearer ${token}`
 			}
 		};
-
+		const credentialPromise = API.getCredentials(config);
 		const notePromise = API.getNotes(config);
 		const cardPromise = API.getCards(config);
 		const wifiPromise = API.getWifi(config);
+
+		credentialPromise.then(response => {
+			setCredentials(response.data);
+		});
 
 		notePromise.then(response => {
 			setNotes(response.data);
@@ -37,8 +43,7 @@ export default function MainPage() {
 		wifiPromise.then(response => {
 			setWifi(response.data);
 		})
-	}, [])
-
+	}, []);
 
 	const subsectionList = [{
 		icon: <BiLogIn className="Subsection__icon" />,
@@ -64,17 +69,17 @@ export default function MainPage() {
 
 	function Subsections() {
 		return (
-			subsectionList.map(element => {
+				subsectionList.map(element => {
 				return (
-					<Link to={"/" + element.linkName}>
-						<Subsection>
-							{element.icon}
-							<Title>{element.name}</Title>
-							<Count>
-								{element.count}
-							</Count>
-						</Subsection>
-					</Link>
+				<Link to={"/" + element.linkName}>
+					<Subsection>
+						{element.icon}
+						<Title>{element.name}</Title>
+						<Count>
+							{element.count}
+						</Count>
+					</Subsection>
+				</Link>
 				)
 			})
 		);
@@ -82,12 +87,12 @@ export default function MainPage() {
 
 
 	return (
-			<Page>
-				<HeaderComponent headerTitle={"Minhas Senhas"} />
-				<Main>
-					<Subsections />
-				</Main>
-			</Page>
+		<Page>
+			<HeaderComponent headerTitle={"Minhas Senhas"} />
+			<Main>
+				<Subsections />
+			</Main>
+		</Page>
 	)
 }
 
