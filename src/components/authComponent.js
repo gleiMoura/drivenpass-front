@@ -25,6 +25,7 @@ export default function AuthComponent({
 		const promise = API.authentication(body, authType);
 		promise.then(response => {
 			localStorage.setItem("data", JSON.stringify(response.data));
+			setMessage("Conta criada com sucesso!");
 			navigate(promiseLink);
 		})
 		promise.catch((error) => {
@@ -61,7 +62,11 @@ export default function AuthComponent({
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
 				<input type="submit" value={buttonName} id="submit" />
-				<p className="Form__message">{message}</p>
+				<p className={
+					message === "Conta criada com sucesso!"? 
+						"Form__messageGreen":
+							"Form__message"
+				}>{message}</p>
 				<Link to={routerLink}>{routerMessage}</Link>
 			</Form>
 		</>
@@ -141,5 +146,10 @@ const Form = styled.form`
 	.Form__message{
 		margin-top: 15px;
 		color: red;
+	}
+
+	.Form__messageGreen{
+		margin-top: 15px;
+		color: green;
 	}
 `
