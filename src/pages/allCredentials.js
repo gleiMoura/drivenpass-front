@@ -1,7 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import HeaderComponent from "../components/headerComponent";
 import credentialContext from "../contextsAPI/credentialContext";
-import API from "../repository/API";
 import styled from "styled-components";
 import { BiLogIn } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +19,9 @@ export default function Credentials() {
 						<Title>
 							There isn't credentials yet!
 						</Title>
+						<Add>
+							+
+						</Add>
 					</AllCredentials>
 					:
 					<AllCredentials>
@@ -35,6 +37,9 @@ export default function Credentials() {
 								</Element>
 							)
 						})}
+						<Add>
+							+
+						</Add>
 					</AllCredentials>
 			}
 		</Page>
@@ -53,8 +58,9 @@ const AllCredentials = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin-top: 20px;
-
 	width: 375px;
+	height: 75vh;
+	position: relative;
 `;
 
 const Element = styled.div`
@@ -76,3 +82,18 @@ const Title = styled.p`
 	color: black;
 `;
 
+const Add = styled.h1`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	background-color: #005985;
+	color: white;
+	font-size: 30px;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	cursor: pointer;
+`;
