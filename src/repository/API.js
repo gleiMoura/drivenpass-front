@@ -17,6 +17,11 @@ function getCredentialById(config, idCredential) {
 	return promise;
 };
 
+function deleteCredentialById(config, idCredential) {
+	const promise = axios.delete(`${BASE_URL}/credential/${idCredential}`, config);
+	return promise;
+}
+
 function getNotes(config) {
 const promise = axios.get(`${BASE_URL}/notes`, config);
 return promise;
@@ -36,6 +41,7 @@ const API = {
 	authentication,
 	getCredentials,
 	getCredentialById,
+	deleteCredentialById,
 	getNotes,
 	getCards,
 	getWifi

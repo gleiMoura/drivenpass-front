@@ -3,21 +3,24 @@ import { useParams } from "react-router-dom";
 import HeaderComponent from "../components/headerComponent"
 import API from "../repository/API";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Credential() {
+	const navigate = useNavigate();
+
 	const [credentialData, setCredentialData] = useState([]);
 
 	const { idCredential } = useParams();
 
+	const { token } = JSON.parse(localStorage.getItem("data"));
+
+	const config = {
+		headers: {
+			authorization: `Bearer ${token}`
+		}
+	};
+
 	useEffect(() => {
-		const { token } = JSON.parse(localStorage.getItem("data"));
-
-		const config = {
-			headers: {
-				authorization: `Bearer ${token}`
-			}
-		};
-
 		const credentialPromise = API.getCredentialById(config, idCredential);
 
 		credentialPromise.then(response => {
@@ -58,6 +61,27 @@ export default function Credential() {
 					{credentialData.password}
 				</p>
 			</Component>
+			<Footer>
+				<Back onClick={() => {
+					navigate("/credentials");
+				}}>
+					voltar
+				</Back>
+				<Delete onClick={() => {
+					const deletePromise = API.deleteCredentialById(config, idCredential);
+
+					deletePromise.then(response => {
+						console.log(response.data);
+						navigate("/credentials");
+					}).catch(err => {
+						console.error(err.data);
+					});
+
+					
+				}} alt="deletar">
+					X
+				</Delete>
+			</Footer>
 		</Page>
 
 	)
@@ -68,6 +92,7 @@ const Page = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	position: relative;
 `;
 
 const Component = styled.section`
@@ -90,4 +115,32 @@ const Component = styled.section`
 		height: auto;
 		word-wrap: break-word;
 	}
+`;
+
+const Footer = styled.div`
+	width: 375px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+`;
+
+const Back = styled.div`
+	font-size: 20px;
+	cursor: pointer;
+	margin: 20px;
+`;
+
+const Delete = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	margin: 20px;
+	background-color: red;
+	color: white;
+	font-size: 30px;
+	border-radius: 50%;
+	cursor: pointer;
 `;

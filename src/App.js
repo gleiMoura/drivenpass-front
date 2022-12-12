@@ -17,8 +17,6 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const [wifi, setWifi] = useState([]);
 
-
-
 	return (
 		<>
 			<CredentialContext.Provider value={{ credentials, setCredentials }}>
