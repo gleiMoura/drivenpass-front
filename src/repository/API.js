@@ -7,6 +7,11 @@ function authentication(body, authType) {
 	return promise
 };
 
+function createCredential(config, body) {
+	const promise = axios.post(`${BASE_URL}/credentials`, body, config);
+	return promise;
+}
+
 function getCredentials(config) {
 	const promise = axios.get(`${BASE_URL}/credentials`, config);
 	return promise;
@@ -39,6 +44,7 @@ function getWifi(config) {
 
 const API = {
 	authentication,
+	createCredential,
 	getCredentials,
 	getCredentialById,
 	deleteCredentialById,

@@ -1,10 +1,9 @@
-import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import HeaderComponent from "../components/headerComponent"
 import API from "../repository/API";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import { Page, Component, Footer, Back, Delete } from "../styles/pagesStyles";
 export default function Credential() {
 	const navigate = useNavigate();
 
@@ -87,60 +86,3 @@ export default function Credential() {
 	)
 };
 
-const Page = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-`;
-
-const Component = styled.section`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	margin: 10px;
-
-	h1{
-		margin: 5px;
-		font-size: 20px;
-		font-weight: 700;
-		width: 375px;
-	}
-
-	p{
-		margin: 5px;
-		font-size: 20px;
-		width: 375px;
-		height: auto;
-		word-wrap: break-word;
-	}
-`;
-
-const Footer = styled.div`
-	width: 375px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	position: relative;
-`;
-
-const Back = styled.div`
-	font-size: 20px;
-	cursor: pointer;
-	margin: 20px;
-`;
-
-const Delete = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 50px;
-	height: 50px;
-	margin: 20px;
-	background-color: red;
-	color: white;
-	font-size: 30px;
-	border-radius: 50%;
-	cursor: pointer;
-`;

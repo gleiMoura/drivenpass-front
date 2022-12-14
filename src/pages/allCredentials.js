@@ -1,9 +1,9 @@
-import { useContext } from "react";
 import HeaderComponent from "../components/headerComponent";
 import credentialContext from "../contextsAPI/credentialContext";
-import styled from "styled-components";
 import { BiLogIn } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Page, AllCredentials, Title, Add, Element } from "../styles/pagesStyles";
 
 export default function Credentials() {
 	const navigate = useNavigate();
@@ -19,7 +19,9 @@ export default function Credentials() {
 						<Title>
 							There isn't credentials yet!
 						</Title>
-						<Add>
+						<Add onClick={() => {
+							navigate("/credential/add")
+						}}>
 							+
 						</Add>
 					</AllCredentials>
@@ -37,7 +39,9 @@ export default function Credentials() {
 								</Element>
 							)
 						})}
-						<Add>
+						<Add onClick={() => {
+							navigate("/credential/add")
+						}}>
 							+
 						</Add>
 					</AllCredentials>
@@ -46,54 +50,4 @@ export default function Credentials() {
 	)
 };
 
-const Page = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-`;
 
-const AllCredentials = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 20px;
-	width: 375px;
-	height: 75vh;
-	position: relative;
-`;
-
-const Element = styled.div`
-	display: flex;
-	justify-content: first baseline;
-	align-items: center;
-	cursor: pointer;
-
-	.Element__icon{
-		font-size: 50px;
-		color: #005985;
-		margin-right: 20px;
-	}
-`;
-
-const Title = styled.p`
-	font-size: 18px;
-	font-family: 'Recursive';
-	color: black;
-`;
-
-const Add = styled.h1`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 50px;
-	height: 50px;
-	background-color: #005985;
-	color: white;
-	font-size: 30px;
-	border-radius: 50%;
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-	cursor: pointer;
-`;
