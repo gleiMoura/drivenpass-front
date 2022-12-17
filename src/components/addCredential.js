@@ -1,13 +1,10 @@
 import styled from "styled-components";
-import HeaderComponent from "../components/headerComponent";
+import HeaderComponent from "./headerComponent";
 import API from "../repository/API";
 import { Page } from "../styles/pagesStyles";
 import { AiOutlineCheck } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
 
-
-const AddCredential = () => {
-	const navigate = useNavigate();
+const AddCredential = ({setAddBoolean}) => {
 
 	function submitForm(e) {
 		e.preventDefault();
@@ -32,8 +29,8 @@ const AddCredential = () => {
 
 		const promise = API.createCredential(config, body);
 		promise.then(answer => {
-			console.log("Created!");
-			navigate("/credentials")
+			console.log("Created!", answer.data);
+			setAddBoolean(false);
 		}).catch(err => {
 			console.log(err.data);
 			console.error(err.request.response)
@@ -55,9 +52,11 @@ const AddCredential = () => {
 				<button>
 					<AiOutlineCheck />
 				</button>
-				<Link to="/credentials">
+				<div onClick={() => {
+					setAddBoolean(false)
+				}}>
 					voltar
-				</Link>
+				</div>
 			</Form>
 		</Page>
 	)
@@ -108,11 +107,12 @@ const Form = styled.form`
 		cursor: pointer;
 	}
 
-	a{
+	div{
 		color: black;
 		position: absolute;
 		bottom: -80px;
 		left: 0;
 		font-size: 20px;
+		cursor: pointer;
 	}
 `;

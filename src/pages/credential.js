@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Page, Component, Footer, Back, Delete } from "../styles/pagesStyles";
 export default function Credential() {
-	const navigate = useNavigate();
-
 	const [credentialData, setCredentialData] = useState([]);
 
-	const { idCredential } = useParams();
+	const navigate = useNavigate();
 
+	const { idCredential } = useParams();
+	
 	const { token } = JSON.parse(localStorage.getItem("data"));
 
 	const config = {
@@ -25,7 +25,7 @@ export default function Credential() {
 		credentialPromise.then(response => {
 			setCredentialData(response.data);
 		});
-	}, []);
+	}, [idCredential]);
 
 	return (
 
@@ -71,12 +71,10 @@ export default function Credential() {
 
 					deletePromise.then(response => {
 						console.log(response.data);
-						navigate("/credentials");
+						navigate("/mainpage");
 					}).catch(err => {
 						console.error(err.data);
 					});
-
-					
 				}} alt="deletar">
 					X
 				</Delete>
