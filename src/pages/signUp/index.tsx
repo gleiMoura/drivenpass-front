@@ -2,24 +2,30 @@ import { useState } from "react";
 import styled from "styled-components";
 import padlock from "../../assets/padlock.png";
 import { Link } from "react-router-dom";
+import { signupRequest } from "../../repository/authRepo";
 
 export default function SignUp() {
 	const [message, setMessage] = useState("");
 
-	function submitForm(e: any) {
+	async function submitForm(e: any) {
 		e.preventDefault();
 
-		const body = {
-			email: e.target[0].value,
-			password: e.target[1].value
-		}
+		const email = e.target[0].value;
+		const password = e.target[1].value;
 
-		if (body.password.length < 10) {
+		if (password.length < 10) {
 			setMessage("senha deve conter no mínimo 10 caracteres!")
 		} else {
 			setMessage("Insira um E-mail ou senha válidos")
 		}
+
+		const response = await signupRequest(email, password);
+		if (response !== null) {
+			setMessage("Conta criada com sucesso!")
+		}
+
 	}
+
 
 	return (
 		<>
@@ -38,7 +44,7 @@ export default function SignUp() {
 						"Form__messageGreen" :
 						"Form__message"
 				}>{message}</p>
-				<Link to={"/signIn"}>{"voltar para Login"}</Link>
+				<Link to={"/"}>{"voltar para Login"}</Link>
 			</Form>
 		</>
 	)

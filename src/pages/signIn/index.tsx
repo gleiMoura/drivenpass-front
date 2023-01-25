@@ -13,12 +13,18 @@ export default function SignIn() {
 		const email = e.target[0].value
 		const password = e.target[1].value
 
-		await signinRequest(email, password)
-
 		if (password.length < 10) {
 			setMessage("senha deve conter no mínimo 10 caracteres!")
 		} else {
 			setMessage("Insira um E-mail ou senha válidos")
+		}
+
+		try {
+			const response = await signinRequest(email, password);
+			console.log(response)
+		} catch (error) {
+			setMessage("Erro")
+			console.error(error)
 		}
 	}
 
@@ -34,11 +40,7 @@ export default function SignIn() {
 				<label>Senha</label>
 				<input type="password" minLength={6} id="password" required />
 				<input type="submit" value="Acessar" id="submit" />
-				<p className={
-					message === "Conta criada com sucesso!" ?
-						"Form__messageGreen" :
-						"Form__message"
-				}>{message}</p>
+				<p className="Form__message">{message}</p>
 				<Link to={"/signup"}>{"Primeiro acesso? Crie sua conta!"}</Link>
 			</Form>
 		</>
